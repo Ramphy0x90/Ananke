@@ -1,0 +1,98 @@
+package devracom.ananke.ananke.User;
+
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequestMapping(path = "api/v1/user")
+public class UserController {
+    private final UserService userService;
+
+    public  UserController(UserService userService) {
+        this.userService = userService;
+    }
+
+    /**
+     * Returns all users
+     * @return List<User>
+     */
+    @Operation(summary = "Get all users")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200"),
+            @ApiResponse(responseCode = "401", description = "Authorization denied"),
+    })
+    @GetMapping(path = "/all")
+    public List<User> getUsers() {
+        return userService.getUsers();
+    }
+
+    /**
+     * Returns a user by given id
+     * @param id user id
+     * @return User
+     */
+    @Operation(summary = "Get user by id")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200"),
+            @ApiResponse(responseCode = "401", description = "Authorization denied"),
+            @ApiResponse(responseCode = "404", description = "User not found"),
+    })
+    @GetMapping(path = "/{id}")
+    public ResponseEntity<User> getUser(@PathVariable("id") Long id) {
+        return new ResponseEntity<>(userService.getUser(id), HttpStatus.OK);
+    }
+
+    /**
+     * Create a new user and returns the user created
+     * @param user user data
+     * @return User
+     */
+    @Operation(summary = "Create new user")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Successfully created new user"),
+            @ApiResponse(responseCode = "401", description = "Authorization denied"),
+            @ApiResponse(responseCode = "400", description = "Bad request"),
+    })
+    @PostMapping(path = "/create")
+    public ResponseEntity<User> createUser(@RequestBody User user) {
+        return null;
+    }
+
+    /**
+     * Update user data
+     * @param id user id
+     * @return User
+     */
+    @Operation(summary = "Update user data")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "204", description = "user updated"),
+            @ApiResponse(responseCode = "401", description = "Authorization denied"),
+            @ApiResponse(responseCode = "400", description = "Bad request"),
+            @ApiResponse(responseCode = "404", description = "User not found"),
+    })
+    @PutMapping(path = "/update/{id}")
+    public ResponseEntity<User> updateUser(@PathVariable("id") Long id) {
+        return null;
+    }
+
+    /**
+     * Delete user by given id and return void
+     * @param id user id
+     */
+    @Operation(summary = "Delete user by id")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "204", description = "User deleted"),
+            @ApiResponse(responseCode = "401", description = "Authorization denied"),
+            @ApiResponse(responseCode = "404", description = "User not found"),
+    })
+    @DeleteMapping(path = "/delete/{id}")
+    public void deleteUser(@PathVariable("id") Long id) {
+
+    }
+}
