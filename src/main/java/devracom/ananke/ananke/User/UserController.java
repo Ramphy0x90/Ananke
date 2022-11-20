@@ -1,5 +1,7 @@
 package devracom.ananke.ananke.User;
 
+import devracom.ananke.ananke.User.dto.UserNew;
+import devracom.ananke.ananke.User.dto.UserUpdate;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -60,8 +62,8 @@ public class UserController {
             @ApiResponse(responseCode = "400", description = "Bad request"),
     })
     @PostMapping(path = "/create")
-    public ResponseEntity<User> createUser(@RequestBody User user) {
-        return null;
+    public ResponseEntity<User> createUser(@RequestBody UserNew user) {
+        return new ResponseEntity<User>(userService.createUser(user), HttpStatus.CREATED);
     }
 
     /**
@@ -71,14 +73,15 @@ public class UserController {
      */
     @Operation(summary = "Update user data")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "204", description = "user updated"),
+            @ApiResponse(responseCode = "202", description = "user updated"),
             @ApiResponse(responseCode = "401", description = "Authorization denied"),
             @ApiResponse(responseCode = "400", description = "Bad request"),
             @ApiResponse(responseCode = "404", description = "User not found"),
     })
     @PutMapping(path = "/update/{id}")
-    public ResponseEntity<User> updateUser(@PathVariable("id") Long id) {
-        return null;
+    public ResponseEntity<User> updateUser(@PathVariable("id") Long id,
+                                           @RequestBody UserUpdate userUpdate) {
+        return new ResponseEntity<User>(userService.updateUser(id, userUpdate), HttpStatus.ACCEPTED);
     }
 
     /**
