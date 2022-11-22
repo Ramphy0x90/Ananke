@@ -72,6 +72,7 @@ public class UserService {
                     user.getSurname(),
                     user.getEmail(),
                     passwordEncoder.encode(user.getPassword()),
+                    1,
                     new ArrayList<>()
             );
 
@@ -93,7 +94,20 @@ public class UserService {
         user.setName(userUpdate.getName());
         user.setSurname(userUpdate.getSurname());
         user.setPassword(passwordEncoder.encode(userUpdate.getPassword()));
+        user.setStatus(userUpdate.getStatus());
 
         return user;
+    }
+
+    /**
+     * Delete an user by given id
+     * @param id  user id
+     */
+    public void deleteUser(Long id) {
+        User findUser = userRepository.findById(id).orElseThrow(
+                () -> new UserNotFoundException(String.format("User with ID: %s not found", id))
+        );
+
+        userRepository.deleteById(id);
     }
 }
