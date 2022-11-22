@@ -23,17 +23,19 @@ public class User {
     private String surname;
     private String email;
     private String password;
+    private Integer status;
 
     @ManyToMany(fetch = FetchType.EAGER)
     private Collection<Role> roles = Collections.emptyList();
 
     public User() {}
 
-    public User(String name, String surname, String email, String password, Collection<Role> roles) {
+    public User(String name, String surname, String email, String password, Integer status, Collection<Role> roles) {
         this.name = name;
         this.surname = surname;
         this.email = email;
         this.password = password;
+        this.status = status;
         this.roles = roles;
     }
 
@@ -51,6 +53,10 @@ public class User {
 
     public String getPassword() {
         return password;
+    }
+
+    public Integer getStatus() {
+        return status;
     }
 
     public Collection<Role> getRoles() {
@@ -71,6 +77,10 @@ public class User {
 
     public void addRole(Role role) {
         this.roles.add(role);
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 
     public void removeRole(Role role) {
