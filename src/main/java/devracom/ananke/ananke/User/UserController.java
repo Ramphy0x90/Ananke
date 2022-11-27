@@ -3,6 +3,7 @@ package devracom.ananke.ananke.User;
 import devracom.ananke.ananke.User.dto.UserNew;
 import devracom.ananke.ananke.User.dto.UserUpdate;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.http.HttpStatus;
@@ -27,7 +28,7 @@ public class UserController {
     @Operation(summary = "Get all users")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200"),
-            @ApiResponse(responseCode = "401", description = "Authorization denied"),
+            @ApiResponse(responseCode = "401", description = "Authorization denied", content = @Content),
     })
     @GetMapping(path = "/all")
     public List<User> getUsers() {
@@ -42,8 +43,8 @@ public class UserController {
     @Operation(summary = "Get user by id")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200"),
-            @ApiResponse(responseCode = "401", description = "Authorization denied"),
-            @ApiResponse(responseCode = "404", description = "User not found"),
+            @ApiResponse(responseCode = "401", description = "Authorization denied", content = @Content),
+            @ApiResponse(responseCode = "404", description = "User not found", content = @Content),
     })
     @GetMapping(path = "/{id}")
     public ResponseEntity<User> getUser(@PathVariable("id") Long id) {
@@ -58,8 +59,8 @@ public class UserController {
     @Operation(summary = "Create new user")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Successfully created new user"),
-            @ApiResponse(responseCode = "401", description = "Authorization denied"),
-            @ApiResponse(responseCode = "400", description = "Bad request"),
+            @ApiResponse(responseCode = "401", description = "Authorization denied", content = @Content),
+            @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
     })
     @PostMapping(path = "/create")
     public ResponseEntity<User> createUser(@RequestBody UserNew user) {
@@ -74,9 +75,9 @@ public class UserController {
     @Operation(summary = "Update user data")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "202", description = "user updated"),
-            @ApiResponse(responseCode = "401", description = "Authorization denied"),
-            @ApiResponse(responseCode = "400", description = "Bad request"),
-            @ApiResponse(responseCode = "404", description = "User not found"),
+            @ApiResponse(responseCode = "401", description = "Authorization denied", content = @Content),
+            @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
+            @ApiResponse(responseCode = "404", description = "User not found", content = @Content),
     })
     @PutMapping(path = "/update/{id}")
     public ResponseEntity<User> updateUser(@PathVariable("id") Long id,
@@ -91,8 +92,8 @@ public class UserController {
     @Operation(summary = "Delete user by id")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "204", description = "User deleted"),
-            @ApiResponse(responseCode = "401", description = "Authorization denied"),
-            @ApiResponse(responseCode = "404", description = "User not found"),
+            @ApiResponse(responseCode = "401", description = "Authorization denied", content = @Content),
+            @ApiResponse(responseCode = "404", description = "User not found", content = @Content),
     })
     @DeleteMapping(path = "/delete/{id}")
     public void deleteUser(@PathVariable("id") Long id) {
