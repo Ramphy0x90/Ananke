@@ -1,6 +1,7 @@
 package devracom.ananke.ananke.User;
 
 import devracom.ananke.ananke.User.dto.UserNew;
+import devracom.ananke.ananke.User.dto.UserResponse;
 import devracom.ananke.ananke.User.dto.UserUpdate;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -31,7 +32,7 @@ public class UserController {
             @ApiResponse(responseCode = "401", description = "Authorization denied", content = @Content),
     })
     @GetMapping(path = "/all")
-    public List<User> getUsers() {
+    public List<UserResponse> getUsers() {
         return userService.getUsers();
     }
 

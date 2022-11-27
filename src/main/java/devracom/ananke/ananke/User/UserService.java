@@ -1,10 +1,10 @@
 package devracom.ananke.ananke.User;
 
 import devracom.ananke.ananke.User.dto.UserNew;
+import devracom.ananke.ananke.User.dto.UserResponse;
 import devracom.ananke.ananke.User.dto.UserUpdate;
 import devracom.ananke.ananke.User.exceptions.UserAlreadyExistsException;
 import devracom.ananke.ananke.User.exceptions.UserNotFoundException;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,8 +29,22 @@ public class UserService {
      * Get all users
      * @return List<User>
      */
-    public List<User> getUsers() {
-        return userRepository.findAll();
+    public List<UserResponse> getUsers() {
+        List<User> users = userRepository.findAll();
+        List<UserResponse> usersResponse = new ArrayList<>();
+
+        for(User user: users) {
+            usersResponse.add(
+                    new UserResponse(user.getName(),
+                            user.getSurname(),
+                            user.getEmail(),
+                            user.getStatus(),
+                            user.getRoles()
+                    )
+            );
+        }
+
+        return usersResponse;
     }
 
     /**
