@@ -9,6 +9,7 @@ public class UserNew {
     private String surname;
     private String email;
     private String password;
+    private Integer status;
     private Collection<Role> roles;
 
     public String getName() {
@@ -43,6 +44,14 @@ public class UserNew {
         this.password = password;
     }
 
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
     public Collection<Role> getRoles() {
         return roles;
     }
@@ -58,6 +67,7 @@ public class UserNew {
                 ", surname='" + surname + '\'' +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
+                ", status=" + status +
                 ", roles=" + roles +
                 '}';
     }

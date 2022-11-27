@@ -44,6 +44,7 @@ public class UserUpdate {
                 "name='" + name + '\'' +
                 ", surname='" + surname + '\'' +
                 ", password='" + password + '\'' +
+                ", status=" + status +
                 '}';
     }
 }
