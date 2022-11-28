@@ -10,7 +10,6 @@ public class UserNew {
     private String email;
     private String password;
     private Integer status;
-    private Collection<Role> roles;
 
     public String getName() {
         return name;
@@ -52,14 +51,6 @@ public class UserNew {
         this.status = status;
     }
 
-    public Collection<Role> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(Collection<Role> roles) {
-        this.roles = roles;
-    }
-
     @Override
     public String toString() {
         return "UserNew{" +
@@ -68,7 +59,6 @@ public class UserNew {
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
                 ", status=" + status +
-                ", roles=" + roles +
                 '}';
     }
 }
