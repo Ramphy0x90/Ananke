@@ -1,4 +1,4 @@
-package devracom.ananke.ananke.security;
+package devracom.ananke.ananke.config.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -40,6 +40,7 @@ public class SecurityConfig {
                         .antMatchers("/swagger-ui.html").permitAll()
                         .antMatchers("/swagger-ui/**").permitAll()
                         .antMatchers("/api/v1/user/log-in/**").permitAll()
+                        .antMatchers("/api/v1/**").permitAll()
                         .anyRequest()
                         .authenticated()
                 );
