@@ -11,6 +11,14 @@ public class UserNew {
     private String password;
     private Integer status;
 
+    public UserNew(String name, String surname, String email, String password, Integer status) {
+        this.name = name;
+        this.surname = surname;
+        this.email = email;
+        this.password = password;
+        this.status = status;
+    }
+
     public String getName() {
         return name;
     }
