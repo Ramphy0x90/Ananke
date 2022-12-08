@@ -87,4 +87,17 @@ public class User {
         Predicate<Role> roleRemove = (Role roleToRemove) -> (roleToRemove.getName().equals(role.getName()));
         this.roles.removeIf(roleRemove);
     }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", status=" + status +
+                ", roles=" + roles +
+                '}';
+    }
 }

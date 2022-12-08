@@ -6,6 +6,13 @@ public class UserUpdate {
     private String password;
     private Integer status;
 
+    public UserUpdate(String name, String surname, String password, Integer status) {
+        this.name = name;
+        this.surname = surname;
+        this.password = password;
+        this.status = status;
+    }
+
     public String getName() {
         return name;
     }
