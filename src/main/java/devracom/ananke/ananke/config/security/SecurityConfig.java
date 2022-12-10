@@ -1,5 +1,6 @@
 package devracom.ananke.ananke.config.security;
 
+import devracom.ananke.ananke.config.security.jwt.JwtAuthenticationFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -22,6 +23,11 @@ public class SecurityConfig {
     @Bean
     CustomUserDetailsService customUserDetailsService() {
         return new CustomUserDetailsService();
+    }
+
+    @Bean
+    public JwtAuthenticationFilter jwtAuthenticationFilter() {
+        return new JwtAuthenticationFilter();
     }
 
     @Bean
