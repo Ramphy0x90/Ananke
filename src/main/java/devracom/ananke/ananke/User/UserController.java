@@ -1,14 +1,17 @@
 package devracom.ananke.ananke.User;
 
-import devracom.ananke.ananke.User.dto.UserNew;
-import devracom.ananke.ananke.User.dto.UserResponse;
-import devracom.ananke.ananke.User.dto.UserUpdate;
+import devracom.ananke.ananke.User.dto.*;
+import devracom.ananke.ananke.config.security.jwt.JwtTokenProvider;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,9 +20,37 @@ import java.util.List;
 @RequestMapping(path = "api/v1/user")
 public class UserController {
     private final UserService userService;
+    private final AuthenticationManager authenticationManager;
+    private final JwtTokenProvider jwtTokenProvider;
 
-    public  UserController(UserService userService) {
+    public  UserController(UserService userService,
+                           AuthenticationManager authenticationManager,
+                           JwtTokenProvider jwtTokenProvider) {
         this.userService = userService;
+        this.authenticationManager = authenticationManager;
+        this.jwtTokenProvider = jwtTokenProvider;
+    }
+
+    /**
+     * Returns a new JWT token
+     * @param userDTO user data
+     * @return ResponseEntity<JwtResponse>
+     */
+    @Operation(summary = "User login")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200"),
+            @ApiResponse(responseCode = "403", description = "Unauthorized", content = @Content),
+    })
+    @PostMapping("/log-in")
+    public ResponseEntity<JwtResponse> authenticateUser(@RequestBody UserLogin userDTO) {
+        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
+                userDTO.getEmail(), userDTO.getPassword()
+        ));
+
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        String token = jwtTokenProvider.generateToken(authentication);
+
+        return ResponseEntity.ok(new JwtResponse(token));
     }
 
     /**
