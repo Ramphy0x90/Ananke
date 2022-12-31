@@ -42,7 +42,7 @@ public class UserController {
             @ApiResponse(responseCode = "403", description = "Unauthorized", content = @Content),
     })
     @PostMapping("/log-in")
-    public ResponseEntity<JwtResponse> authenticateUser(@RequestBody UserLogin userDTO) {
+    public ResponseEntity<AuthResponse> authenticateUser(@RequestBody UserLogin userDTO) {
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
                 userDTO.getEmail(), userDTO.getPassword()
         ));
@@ -50,7 +50,19 @@ public class UserController {
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String token = jwtTokenProvider.generateToken(authentication);
 
-        return ResponseEntity.ok(new JwtResponse(token));
+        User user = userService.getUser(userDTO.getEmail());
+        UserResponse userResponse = new UserResponse(
+                user.getName(),
+                user.getSurname(),
+                user.getEmail(),
+                user.getStatus(),
+                user.getRoles()
+        );
+
+        return ResponseEntity.ok(new AuthResponse(
+                userResponse,
+                new JwtResponse(token)
+        ));
     }
 
     /**
