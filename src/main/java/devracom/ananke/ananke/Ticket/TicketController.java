@@ -2,18 +2,20 @@ package devracom.ananke.ananke.Ticket;
 
 import devracom.ananke.ananke.Ticket.models.Category;
 import devracom.ananke.ananke.Ticket.models.Priority;
+import devracom.ananke.ananke.Ticket.models.Status;
 import devracom.ananke.ananke.Ticket.models.Ticket;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Controller
+@RestController
 @RequestMapping(path = "api/v1/ticket")
 public class TicketController {
     private final TicketService ticketService;
@@ -34,6 +36,38 @@ public class TicketController {
     @GetMapping(path = "/all")
     public List<Ticket> getTickets() {
         return ticketService.getTickets();
+    }
+
+    /**
+     * Returns a ticket by given id
+     * @param id ticket id
+     * @return Ticket
+     */
+    @Operation(summary = "Get ticket by id")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200"),
+            @ApiResponse(responseCode = "401", description = "Authorization denied", content = @Content),
+            @ApiResponse(responseCode = "404", description = "User not found", content = @Content),
+    })
+    @GetMapping(path = "/{id}")
+    public ResponseEntity<Ticket> getTicket(@PathVariable("id") Long id) {
+        return new ResponseEntity<>(ticketService.getTicket(id), HttpStatus.OK);
+    }
+
+    /**
+     * Create a new ticket and returns the ticket created
+     * @param ticket ticket data
+     * @return Ticket
+     */
+    @Operation(summary = "Create new ticket")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Successfully created new ticket"),
+            @ApiResponse(responseCode = "401", description = "Authorization denied", content = @Content),
+            @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
+    })
+    @PostMapping(path = "/create")
+    public ResponseEntity<Ticket> createTicket(@RequestBody Ticket ticket) {
+        return new ResponseEntity<>(ticketService.createTicket(ticket), HttpStatus.CREATED);
     }
 
     /**
@@ -63,4 +97,16 @@ public class TicketController {
     public List<Priority> getPriorities() {
         return ticketService.getPriorities();
     }
+
+    /**
+     * Returns all states
+     * @return List<Status>
+     */
+    @Operation(summary = "Get all states")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200"),
+            @ApiResponse(responseCode = "401", description = "Authorization denied", content = @Content),
+    })
+    @GetMapping(path = "/status/all")
+    public List<Status> getStates() { return ticketService.getStates(); }
 }

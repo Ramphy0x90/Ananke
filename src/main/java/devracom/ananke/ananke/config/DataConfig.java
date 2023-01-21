@@ -3,8 +3,12 @@ package devracom.ananke.ananke.config;
 import devracom.ananke.ananke.Role.Role;
 import devracom.ananke.ananke.Role.RoleRepository;
 import devracom.ananke.ananke.Role.exceptions.RoleNotFoundException;
+import devracom.ananke.ananke.Ticket.models.Category;
 import devracom.ananke.ananke.Ticket.models.Priority;
+import devracom.ananke.ananke.Ticket.models.Status;
+import devracom.ananke.ananke.Ticket.repositories.CategoryRepository;
 import devracom.ananke.ananke.Ticket.repositories.PriorityRepository;
+import devracom.ananke.ananke.Ticket.repositories.StatusRepository;
 import devracom.ananke.ananke.User.User;
 import devracom.ananke.ananke.User.UserRepository;
 import org.springframework.boot.CommandLineRunner;
@@ -22,15 +26,22 @@ public class DataConfig {
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
     private final PriorityRepository priorityRepository;
+    private final StatusRepository statusRepository;
+    private final CategoryRepository categoryRepository;
     private final PasswordEncoder passwordEncoder;
 
     public DataConfig(UserRepository userRepository,
                       RoleRepository roleRepository,
                       PriorityRepository priorityRepository,
+                      StatusRepository statusRepository,
+                      CategoryRepository categoryRepository,
                       PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.priorityRepository = priorityRepository;
+        this.statusRepository = statusRepository;
+        this.categoryRepository = categoryRepository;
+
         this.passwordEncoder = passwordEncoder;
     }
     @Bean
@@ -46,6 +57,16 @@ public class DataConfig {
                     "High", "Medium", "Low"
             );
 
+            // Default ticket states
+            List<String> defaultStatus = List.of(
+                    "Open", "On Hold", "Closed"
+            );
+
+            // Default ticket categories
+            List<String> defaultCategories = List.of(
+                    "-"
+            );
+
             // Create default roles
             for(String role: defaultRoles) {
                 roleRepository.save(new Role(role));
@@ -56,6 +77,16 @@ public class DataConfig {
                 priorityRepository.save(
                         new Priority(defaultPriorities.get(i), defaultPriorities.size() - i)
                 );
+            }
+
+            // Create default states
+            for(String status: defaultStatus) {
+                statusRepository.save(new Status(status));
+            }
+
+            // Create default categories
+            for(String category: defaultCategories) {
+                categoryRepository.save(new Category(category));
             }
 
             // Init default users

@@ -13,6 +13,9 @@ public class Ticket {
     private String title;
     private String description;
     @ManyToOne
+    @JoinColumn(name = "status_id")
+    private Status status;
+    @ManyToOne
     @JoinColumn(name = "assignee_id")
     private User assignee;
     @ManyToOne
@@ -41,6 +44,8 @@ public class Ticket {
     public String getDescription() {
         return description;
     }
+
+    public Status getStatus() { return status; }
 
     public User getAssignee() {
         return assignee;
@@ -77,6 +82,8 @@ public class Ticket {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    public void setStatus(Status status) { this.status = status; }
 
     public void setAssignee(User assignee) {
         this.assignee = assignee;
