@@ -35,7 +35,8 @@ public class UserService {
 
         for(User user: users) {
             usersResponse.add(
-                    new UserResponse(user.getName(),
+                    new UserResponse(user.getId(),
+                            user.getName(),
                             user.getSurname(),
                             user.getEmail(),
                             user.getStatus(),

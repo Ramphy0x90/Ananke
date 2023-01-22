@@ -30,6 +30,7 @@ public class Ticket {
     @ManyToOne
     @JoinColumn(name = "author_id")
     private User author;
+    @Column(columnDefinition="TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Date creationDate;
     private Date closeDate;
 

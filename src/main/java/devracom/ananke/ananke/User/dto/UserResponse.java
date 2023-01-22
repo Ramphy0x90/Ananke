@@ -5,18 +5,24 @@ import devracom.ananke.ananke.Role.Role;
 import java.util.Collection;
 
 public class UserResponse {
+    private Long id;
     private String name;
     private String surname;
     private String email;
     private Integer status;
     private Collection<Role> roles;
 
-    public UserResponse(String name, String surname, String email, Integer status, Collection<Role> roles) {
+    public UserResponse(Long id, String name, String surname, String email, Integer status, Collection<Role> roles) {
+        this.id = id;
         this.name = name;
         this.surname = surname;
         this.email = email;
         this.status = status;
         this.roles = roles;
+    }
+
+    public Long getId() {
+        return id;
     }
 
     public String getName() {

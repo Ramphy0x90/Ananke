@@ -39,6 +39,20 @@ public class TicketController {
     }
 
     /**
+     * Returns all tickets for a given user
+     * @return List<Ticket>
+     */
+    @Operation(summary = "Get all tickets for user")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200"),
+            @ApiResponse(responseCode = "401", description = "Authorization denied", content = @Content),
+    })
+    @GetMapping(path = "/all/{id}")
+    public List<Ticket> getTicketsByUser(@PathVariable("id") Long id) {
+        return ticketService.getTicketsByUser(id);
+    }
+
+    /**
      * Returns a ticket by given id
      * @param id ticket id
      * @return Ticket

@@ -52,6 +52,7 @@ public class UserController {
 
         User user = userService.getUser(userDTO.getEmail());
         UserResponse userResponse = new UserResponse(
+                user.getId(),
                 user.getName(),
                 user.getSurname(),
                 user.getEmail(),

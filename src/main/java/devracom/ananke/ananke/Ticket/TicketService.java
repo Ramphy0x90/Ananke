@@ -41,6 +41,14 @@ public class TicketService {
     }
 
     /**
+     * Get all tickets
+     * @return List<Ticket>
+     */
+    public List<Ticket> getTicketsByUser(Long id) {
+        return ticketRepository.findByUserId(id);
+    }
+
+    /**
      * Get ticket by given id
      * @param id Ticket id
      * @return Ticket

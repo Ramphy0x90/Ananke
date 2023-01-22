@@ -67,30 +67,40 @@ public class DataConfig {
                     "-"
             );
 
-            // Create default roles
-            for(String role: defaultRoles) {
-                roleRepository.save(new Role(role));
+            if(roleRepository.count() == 0) {
+                // Create default roles
+                for(String role: defaultRoles) {
+                    roleRepository.save(new Role(role));
+                }
             }
 
-            // Create default priorities
-            for(int i = 0; i < defaultPriorities.size(); i++) {
-                priorityRepository.save(
-                        new Priority(defaultPriorities.get(i), defaultPriorities.size() - i)
-                );
+            if(priorityRepository.count() == 0) {
+                // Create default priorities
+                for(int i = 0; i < defaultPriorities.size(); i++) {
+                    priorityRepository.save(
+                            new Priority(defaultPriorities.get(i), defaultPriorities.size() - i)
+                    );
+                }
             }
 
-            // Create default states
-            for(String status: defaultStatus) {
-                statusRepository.save(new Status(status));
+            if(statusRepository.count() == 0) {
+                // Create default states
+                for(String status: defaultStatus) {
+                    statusRepository.save(new Status(status));
+                }
             }
 
-            // Create default categories
-            for(String category: defaultCategories) {
-                categoryRepository.save(new Category(category));
+            if(categoryRepository.count() == 0) {
+                // Create default categories
+                for(String category: defaultCategories) {
+                    categoryRepository.save(new Category(category));
+                }
             }
 
-            // Init default users
-            initDefaultUsers();
+            if(userRepository.count() == 0) {
+                // Init default users
+                initDefaultUsers();
+            }
         };
     }
 
