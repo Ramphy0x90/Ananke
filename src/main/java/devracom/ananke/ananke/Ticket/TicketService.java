@@ -70,6 +70,27 @@ public class TicketService {
     }
 
     /**
+     * Update ticket with the given
+     * ticket data and return updated ticket
+     * @param ticket ticket data
+     * @return Ticket
+     */
+    public Ticket updateTicket(Ticket ticket) {
+        long ticketId = ticket.getId();
+        Ticket currentTIcket = ticketRepository.findById(ticketId).orElseThrow(
+                () -> new TicketNotFoundException(String.format("Ticket with ID: %s not found", ticketId))
+        );
+
+        currentTIcket.setTitle(ticket.getTitle());
+        currentTIcket.setStatus(ticket.getStatus());
+        currentTIcket.setPriority(ticket.getPriority());
+        currentTIcket.setCategory(ticket.getCategory());
+        currentTIcket.setDescription(ticket.getDescription());
+
+        return currentTIcket;
+    }
+
+    /**
      * Get all ticket priorities
      * @return List<Priority>
      */

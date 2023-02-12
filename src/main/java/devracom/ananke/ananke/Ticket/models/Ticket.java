@@ -1,6 +1,7 @@
 package devracom.ananke.ananke.Ticket.models;
 
 import devracom.ananke.ananke.User.User;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -30,7 +31,7 @@ public class Ticket {
     @ManyToOne
     @JoinColumn(name = "author_id")
     private User author;
-    @Column(columnDefinition="TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    @CreationTimestamp
     private Date creationDate;
     private Date closeDate;
 

@@ -85,6 +85,22 @@ public class TicketController {
     }
 
     /**
+     * Update a ticket by given ticket id and data to update
+     * @param ticket ticket data
+     * @return Ticket
+     */
+    @Operation(summary = "Update ticket")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successfully created new ticket"),
+            @ApiResponse(responseCode = "401", description = "Authorization denied", content = @Content),
+            @ApiResponse(responseCode = "400", description = "Bad request", content = @Content),
+    })
+    @PutMapping(path = "/update")
+    public ResponseEntity<Ticket> updateTicket(@RequestBody Ticket ticket) {
+        return new ResponseEntity<>(ticketService.updateTicket(ticket), HttpStatus.OK);
+    }
+
+    /**
      * Returns all categories
      * @return List<Category>
      */
