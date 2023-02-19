@@ -9,6 +9,9 @@ import devracom.ananke.ananke.Ticket.repositories.CategoryRepository;
 import devracom.ananke.ananke.Ticket.repositories.PriorityRepository;
 import devracom.ananke.ananke.Ticket.repositories.StatusRepository;
 import devracom.ananke.ananke.Ticket.repositories.TicketRepository;
+import devracom.ananke.ananke.User.User;
+import devracom.ananke.ananke.User.UserRepository;
+import devracom.ananke.ananke.User.exceptions.UserNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,15 +24,18 @@ public class TicketService {
     private final CategoryRepository categoryRepository;
     private final PriorityRepository priorityRepository;
     private final StatusRepository statusRepository;
+    private final UserRepository userRepository;
 
     public TicketService(TicketRepository ticketRepository,
                          CategoryRepository categoryRepository,
                          PriorityRepository priorityRepository,
-                         StatusRepository statusRepository) {
+                         StatusRepository statusRepository,
+                         UserRepository userRepository) {
         this.ticketRepository = ticketRepository;
         this.categoryRepository = categoryRepository;
         this.priorityRepository = priorityRepository;
         this.statusRepository = statusRepository;
+        this.userRepository = userRepository;
     }
 
     /**
@@ -66,6 +72,13 @@ public class TicketService {
      * @return Ticket
      */
     public Ticket createTicket(Ticket ticket) {
+        Long assigneeId = ticket.getAssignee().getId();
+        User userAssignee = userRepository.findById(assigneeId).orElseThrow(
+                () -> new UserNotFoundException(String.format("User with ID: %s not found", assigneeId))
+        );
+
+        ticket.setAssignee(userAssignee);
+
         return ticketRepository.save(ticket);
     }
 
