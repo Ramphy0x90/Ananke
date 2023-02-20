@@ -99,6 +99,7 @@ public class TicketService {
         currentTIcket.setPriority(ticket.getPriority());
         currentTIcket.setCategory(ticket.getCategory());
         currentTIcket.setDescription(ticket.getDescription());
+        currentTIcket.setAssignee(ticket.getAssignee());
 
         return currentTIcket;
     }
