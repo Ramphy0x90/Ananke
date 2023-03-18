@@ -2,6 +2,7 @@ package devracom.ananke.ananke.Ticket.models;
 
 import devracom.ananke.ananke.User.User;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -33,6 +34,8 @@ public class Ticket {
     private User author;
     @CreationTimestamp
     private Date creationDate;
+    @UpdateTimestamp
+    private Date lastEditDate;
     private Date closeDate;
 
     public Long getId() {
@@ -71,6 +74,10 @@ public class Ticket {
 
     public Date getCreationDate() {
         return creationDate;
+    }
+
+    public Date getLastEditDate() {
+        return lastEditDate;
     }
 
     public Date getCloseDate() {
